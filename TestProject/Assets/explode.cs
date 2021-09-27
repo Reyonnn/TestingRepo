@@ -7,6 +7,7 @@ public class explode : MonoBehaviour
 
   
 {
+    bool canexplode = false;
    
     // Start is called before the first frame update
     void Start()
@@ -17,8 +18,9 @@ public class explode : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E)& !canexplode)
         {
+            canexplode = true;
             foreach(Transform child in this.transform)
             {
                 child.gameObject.TryGetComponent<Rigidbody>(out Rigidbody childrigid);
@@ -31,6 +33,7 @@ public class explode : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         SceneManager.LoadScene("SampleScene");
+        canexplode = false;
     }
 
 
