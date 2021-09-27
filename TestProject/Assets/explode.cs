@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,10 +9,12 @@ public class explode : MonoBehaviour
   
 {
     bool canexplode = false;
+    public Camera cameraa;
    
     // Start is called before the first frame update
     void Start()
     {
+        cameraa = Camera.main;
         
     }
 
@@ -23,8 +26,10 @@ public class explode : MonoBehaviour
             canexplode = true;
             foreach(Transform child in this.transform)
             {
-                child.gameObject.TryGetComponent<Rigidbody>(out Rigidbody childrigid);
-                childrigid.AddExplosionForce(Random.Range(600,1400), transform.position, 20) ;
+                Vector3 direction = (cameraa.gameObject.transform.position - this.transform.position).normalized;
+                
+                child.gameObject.TryGetComponent <Rigidbody>(out Rigidbody childrigid);
+                childrigid.AddExplosionForce(Random.Range(600,1400), direction, 20) ;
                 StartCoroutine(loadscene());
             }
         }
